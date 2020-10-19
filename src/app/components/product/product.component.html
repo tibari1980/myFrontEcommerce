@@ -1,0 +1,11 @@
+<div *ngIf="products" class="card-columns spacer">
+    <div class="card" style="width:400px" *ngFor="let product of products._embedded.products">
+        <img class="card-img-top" src="{{this.catalogueService.endPoint+'/getPhtoProduct/'+product.code}}" alt="Card image" style="width:100%">
+        <div class="card-body">
+          <h4 class="card-title">{{product.name }}</h4>
+           <span>{{product.currentPrice | number:'1.1-2'}}</span>
+          <p class="card-text">{{product.description}}</p>
+          <a href="#" class="btn btn-primary">show product</a>
+        </div>
+      </div>
+  </div>

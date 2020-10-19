@@ -1,0 +1,5 @@
+<ul class="list-group spacer" *ngIf="categories" >
+    <li class="list-group-item active"
+    *ngFor="let categorie of categories._embedded.categories"
+    >{{categorie.name}}</li>
+</ul>
