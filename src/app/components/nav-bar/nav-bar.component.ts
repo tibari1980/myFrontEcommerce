@@ -19,5 +19,13 @@ export class NavBarComponent implements OnInit {
     this.currentCategorie=undefined;
     this.router.navigateByUrl('/products/1/0');
   }
+  onGetProductPromotion(){
+    this.currentCategorie=undefined;
+    this.router.navigateByUrl('/products/4/0');
+  }
 
+  onGetProductDisponible(){
+    this.currentCategorie=undefined;
+    this.router.navigateByUrl('/products/3/0');
+  }
 }

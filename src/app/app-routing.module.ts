@@ -5,7 +5,6 @@ import { pathToFileURL } from 'url';
 
 const routes: Routes = [
   {path:'products/:p1/:idCategorie',component:ProductComponent},
-  {path:'products/:nameOfProductAffiche',component:ProductComponent},
   {path:'',redirectTo:'products/1/0',pathMatch:'full'}
 ];
 

@@ -25,40 +25,28 @@ export class ProductComponent implements OnInit {
     }
 
   ngOnInit(): void {
-     this.router.events.subscribe((val)=>{
-         if(val instanceof NavigationEnd || val instanceof NavigationStart){
-           let url=val.url;
-           console.log('tibari'+url);
-            let typeProduct = this.route.snapshot.params.nameOfProductAffiche;
-            console.log('Tarik '+typeProduct);
-            if(typeProduct===''){
-              this.title='Produits en promotion :';
-              this.getAllProduct("products/search/productEnPromotion?page="+this.page+"&size="+this.size);
-              console.log('vous etes ici ok');
-            }
-            if(typeProduct==="promotion"){
-              this.title='Produits en promotion :';
-              this.getAllProduct("products/search/productEnPromotion?page="+this.page+"&size="+this.size);
-              }else if(typeProduct==="disponible"){
-                this.title='Produits disponible :';
-                this.getAllProduct("products/search/productDisponible?page="+this.page+"&size="+this.size);  
-              }
-          }
-     })
         this.router.events.subscribe((val) => {
           if (val instanceof NavigationEnd) {
             let url = val.url;        
             let p1 = this.route.snapshot.params.p1;
+            console.log("tibari last"+p1);
             if (p1 == 1) {
               this.title="Produits sélectionné :";
               this.getAllProduct("products/search/productSelected?page=" + this.page + "&size=" + this.size);
             } else if (p1 == 2) {
               //récupération idCategorie
-
               let idCat = this.route.snapshot.params.idCategorie;
               this.title= 'Produits de la catégorié : '+idCat;
               this.getAllProduct("categories/" + idCat + "/products?page=" + this.page + "&size=" + this.size);
+            }else if(p1==3){
+                console.log('je suis ici bravo !!!!!!')
+                this.title='Produits disponible :';
+                this.getAllProduct("products/search/productDisponible?page="+this.page+"&size="+this.size);  
+            }else if(p1==4){
+               this.title='Produits en promotion :';
+               this.getAllProduct("products/search/productEnPromotion?page="+this.page+"&size="+this.size);
             }
+
           }
         });
         let p1 = this.route.snapshot.params.p1;
