@@ -4,8 +4,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { pathToFileURL } from 'url';
 
 const routes: Routes = [
-  {path:'product',component:ProductComponent},
-  {path:'',redirectTo:'product',pathMatch:'full'}
+  {path:'products/:p1/:idCategorie',component:ProductComponent},
+  {path:'products/:nameOfProductAffiche',component:ProductComponent},
+  {path:'',redirectTo:'products/1/0',pathMatch:'full'}
 ];
 
 @NgModule({

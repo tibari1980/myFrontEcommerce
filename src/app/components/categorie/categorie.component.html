@@ -1,5 +1,8 @@
 <ul class="list-group spacer" *ngIf="categories" >
-    <li class="list-group-item active"
+    <li 
+    (click)="getProductByCategorie(categorie)" 
+    class="list-group-item  pointer"
     *ngFor="let categorie of categories._embedded.categories"
+     [ngClass]="currentCategorie==categorie?'active':''"
     >{{categorie.name}}</li>
 </ul>

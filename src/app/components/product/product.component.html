@@ -1,9 +1,29 @@
+<div  *ngIf="title" class="alert alert-dark"><h2>{{title}}</h2></div>
 <div *ngIf="products" class="card-columns spacer">
-    <div class="card" style="width:400px" *ngFor="let product of products._embedded.products">
-        <img class="card-img-top" src="{{this.catalogueService.endPoint+'/getPhtoProduct/'+product.code}}" alt="Card image" style="width:100%">
+      
+      <div class="card" style="width:400px" *ngFor="let product of products._embedded.products">
+        <img class="card-img-top" src="{{this.catalogueService.endPoint+'/getPhtoProduct/'+product.code}}" alt="Card image" style="height: 500px;width: 400px;">
+        <button class="btn btn-danger btn-sm" (click)="onEditPhoto(product)">
+          <i class="fa fa-edit fa-lg" title="modfier la photo de produit"></i>
+        </button>
+        <div *ngIf="editPhoto && currentProduct==product">
+           <!-- <input type="file" (change)="onSelectedFile($event)" />-->
+           <div class="form-group">
+            <div class="input-group mb-3">
+              <div class="custom-file">
+                <input type="file" (change)="onSelectedFile($event)" class="custom-file-input" id="inputGroupFile02">
+                <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+              </div>
+                <div style="margin-top:40px;">
+                  <button class="btn btn-primary btn-sm" (click)="uploadPhotoProduct()">Upload</button>
+                {{progress}}
+                </div>
+              </div>
+          </div>
+        </div>
         <div class="card-body">
           <h4 class="card-title">{{product.name }}</h4>
-           <span>{{product.currentPrice | number:'1.1-2'}}</span>
+           <span>{{product.currentPrice | number:'0.2'}}</span>
           <p class="card-text">{{product.description}}</p>
           <a href="#" class="btn btn-primary">show product</a>
         </div>

@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,10 +7,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./nav-bar.component.css']
 })
 export class NavBarComponent implements OnInit {
-
-  constructor() { }
+  currentCategorie=undefined;
+  titreBoutique="Shopping By Tibari";
+  constructor(private router:Router) { }
 
   ngOnInit(): void {
+  this.onSelectedProduct();
+  }
+
+  onSelectedProduct(){
+    this.currentCategorie=undefined;
+    this.router.navigateByUrl('/products/1/0');
   }
 
 }

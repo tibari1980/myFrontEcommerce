@@ -1,5 +1,6 @@
 import { CatalogueService } from './../../services/catalogue.service';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'categorie',
@@ -8,8 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CategorieComponent implements OnInit {
   categories: Object;
+  currentCategorie;
 
-  constructor(private catalogueService:CatalogueService) { }
+  constructor(private catalogueService:CatalogueService,
+              private router:Router) { }
 
   ngOnInit(): void {
 
@@ -25,4 +28,8 @@ export class CategorieComponent implements OnInit {
     })
   }
 
+  getProductByCategorie(categorie){
+    this.currentCategorie=categorie;
+    this.router.navigateByUrl('/products/2/'+categorie.code);
+  }
 }
