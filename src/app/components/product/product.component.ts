@@ -39,7 +39,6 @@ export class ProductComponent implements OnInit {
               this.title= 'Produits de la catégorié : '+idCat;
               this.getAllProduct("categories/" + idCat + "/products?page=" + this.page + "&size=" + this.size);
             }else if(p1==3){
-                console.log('je suis ici bravo !!!!!!')
                 this.title='Produits disponible :';
                 this.getAllProduct("products/search/productDisponible?page="+this.page+"&size="+this.size);  
             }else if(p1==4){
@@ -81,8 +80,11 @@ export class ProductComponent implements OnInit {
       .subscribe(event=>{
         if(event.type===HttpEventType.UploadProgress){
           this.progress=Math.round(100 * event.loaded /event.total);
-        }else if(event instanceof HttpResponse){
+          console.log('Upload progress : '+Math.round(100 * event.loaded /event.total));
+          this.getAllProduct("products/search/productSelected?page=" + this.page + "&size=" + this.size);
+        }else if(event.type===HttpEventType.Response){
           alert('Photo dowloaded successfully!:');
+          
         }
       },erro=>{
             alert('Bad request');
