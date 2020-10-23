@@ -28,7 +28,7 @@ const routes: Routes = [
   {path:'admin/product/addProduit',component:AddProductComponent},
 
 
-  {path:'**',component:PageNotFoundComponent},
+  {path:'**',component:PageNotFoundComponent}
 ];
 
 @NgModule({

@@ -33,5 +33,6 @@ export class NavBarComponent implements OnInit {
   //méthode pour récupérer la liste des categories pour admin
   onGetAllCategories(){
     this.router.navigateByUrl('/admin/categories');
+    this.router.navigateByUrl('/products/3/0');
   }
 }
