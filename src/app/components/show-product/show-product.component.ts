@@ -77,7 +77,6 @@ export class ShowProductComponent implements OnInit {
 
   uploadPhotoProduct(){
     this.progress=0;
-    console.log("tibari tibari toto :"+this.selectedFiles.item(0));
     this.currentFileUpload=this.selectedFiles.item(0);
      this.catalogueService.uploadDonnesProducts(this.currentFileUpload,this.product.code)
      .subscribe(event=>{

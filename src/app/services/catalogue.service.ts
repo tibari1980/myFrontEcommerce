@@ -1,6 +1,7 @@
-import { HttpClient, HttpEvent, HttpHeaders, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpHeaders, HttpRequest,HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 
 @Injectable({
@@ -9,20 +10,49 @@ import { Observable } from 'rxjs';
 export class CatalogueService {
   
   public endPoint:string="http://localhost:8080/";
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+  }
   constructor(private http: HttpClient) { }
 
   /*
-  Méthode pour récupérer les données
+  Méthode Get
   */
   getData(url:string){
     return this.http.get(this.endPoint+url);
   }
-  createData(fomrData:FormData,url:string):Observable<any>{
-    return this.http.post(this.endPoint+url,fomrData);
+  
+  /*
+    Méthode Post
+  */
+  createData(data:Object,url:string): Observable<Object> {
+    return this.http.post<Object>(this.endPoint+url, JSON.stringify(data), this.httpOptions)
+    .pipe(
+      catchError(this.errorHandler)
+    );
   }
+  
+  /*
+  ** Méthode permet de supprime un objet (DataRessource)
+  */
+  deleteData(url:string):Observable<Object>{
+    return this.http.delete<Object>(this.endPoint+url,this.httpOptions)
+    .pipe(
+      catchError(this.errorHandler)
+    );
+  }
+  
+  /*
+   méthode find one 
+  */
   findOne(url){
     return this.http.get(this.endPoint+url);
   }
+  /*
+    modifié la photo d'un produit
+  */
   uploadDonnesProducts(file:File,idProduct:number):Observable<HttpEvent<{}>> {
     let formData:FormData=new FormData();
     formData.append('file',file);
@@ -33,5 +63,33 @@ export class CatalogueService {
     return this.http.request(req);
   }
 
+  /*
+   méthode pour modifier la photo d'un categorié
+  */
+  uploadDonnesCategories(file:File,idCategorie:number):Observable<HttpEvent<{}>> {
+    let formData:FormData=new FormData();
+    console.log('identifiant categroie jihte service '+idCategorie);
+    formData.append('file',file);
+    const req=new HttpRequest('POST',this.endPoint+"/uploadPhotoCategorie/"+idCategorie,formData,{
+      reportProgress:true,
+      responseType:'text'
+    })
+    return this.http.request(req);
+  }
+
+
+
+  errorHandler(error) {
+    let errorMessage = '';
+    if(error.error instanceof ErrorEvent) {
+      // Get client-side error
+      errorMessage = error.error.message;
+    } else {
+      // Get server-side error
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+    }
+    console.log(errorMessage);
+    return throwError(errorMessage);
+ }
 
 }

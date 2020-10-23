@@ -11,7 +11,7 @@ import { CatalogueService } from 'src/app/services/catalogue.service';
 export class ListeCategoryComponent implements OnInit {
   title:string='';
   page:number=0;
-  size:number=8;
+  size:number=20;
   categories: Object;
   constructor(private cataloguesService:CatalogueService,
               private route:Router) { }
@@ -32,5 +32,22 @@ export class ListeCategoryComponent implements OnInit {
 
   onCreateCategorie(){
     this.route.navigate(['/admin/categorie/addCategorie']);
+  }
+  onDelete(codeCat:number){
+    const con=confirm('Êtes-vous sûr de vouloir supprimer la catégorie numéro : '+codeCat);
+      if(con){
+        this.cataloguesService.deleteData("categories/"+codeCat)
+        .subscribe(data=>{
+           alert('Categorie deleted successfully!:)');
+          this.getAllCategories();
+        },error=>{
+          alert("error"+error);
+        })
+      }
+  }
+
+
+  onEditCategorie(code:number){
+    this.route.navigate(['admin/categorie/edit/'+code]);
   }
 }

@@ -1,6 +1,13 @@
-<div *ngIf="title" class="alert alert-dark spaceTitle">
-  <h2>{{title}}</h2>
-</div>
+<mat-toolbar *ngIf="title" color="primary">
+  <div fxHide.gt-xs>
+      <button mat-icon-button>
+          <mat-icon>menu</mat-icon>
+      </button>
+  </div>
+  <div>
+      <h1>{{title}}</h1>
+  </div>
+</mat-toolbar>
 <div class="row">
   <div class="col-md-12" style="text-align: center;"><a (click)="showProductsSelected()"><strong
         style="cursor: pointer;color: blue;">afficher la liste des produits</strong> </a></div>

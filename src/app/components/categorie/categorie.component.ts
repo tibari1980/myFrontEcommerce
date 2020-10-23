@@ -29,6 +29,7 @@ export class CategorieComponent implements OnInit {
   }
 
   getProductByCategorie(categorie){
+    this.currentCategorie=categorie;
     this.router.navigateByUrl('/products/2/'+categorie.code);
   }
 }

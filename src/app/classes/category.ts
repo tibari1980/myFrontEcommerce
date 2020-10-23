@@ -1,6 +1,6 @@
 export class Category {
     public code:number;
-    public nom:string;
+    public name:string;
     public description:string;
     public nomPhoto:string;
 }

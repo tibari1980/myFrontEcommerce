@@ -14,13 +14,16 @@
         <form #categoryForm="ngForm" novalidate (ngSubmit)="onSubmitCat()">
             <div class="form-group">
                 <label for="nameId">Nom </label>
-                <input type="text" id="nameId" required #nom="ngModel" [(ngModel)]="categoryModule.nom" name="nom"
+                <input type="text" id="nameId" 
+                       required #name="ngModel" 
+                       [(ngModel)]="categoryModule.name" 
+                       name="name"
                     minlength="4" maxlength="40" pattern="[a-zA-Z]+" class="form-control">
-                <div class="alert-danger" *ngIf="!nom.valid && nom.touched ">
-                    <div *ngIf="nom.errors.required">Le champs nom est obligatoire</div>
-                    <div *ngIf="nom.errors.minlength">Ce champ doit contenir ou moins :
-                        {{nom.errors.minlength.actualLength}} | {{nom.errors.minlength.requiredLength}} </div>
-                    <div *ngIf="nom.errors.pattern">Ce champs doit être alphanumérique</div>
+                <div class="alert-danger" *ngIf="!name.valid && name.touched ">
+                    <div *ngIf="name.errors.required">Le champs nom est obligatoire</div>
+                    <div *ngIf="name.errors.minlength">Ce champ doit contenir ou moins :
+                        {{name.errors.minlength.actualLength}} | {{name.errors.minlength.requiredLength}} </div>
+                    <div *ngIf="name.errors.pattern">Ce champs doit être alphanumérique</div>
 
                 </div>
             </div>
@@ -39,8 +42,8 @@
                 </div>
             </div>
             <div class="form-group">
-                <label>File Upload </label>
-                <input type="file" accept="image/*" (change)="onSelectFile($event)">
+                <label for="imageCat">File Upload </label>
+                <input type="file" id="imageCat"   accept="image/*"  (change)="onSelectFile($event)">
             </div>
             <div class="form-group">
                 <img [src]="imgURL" height="200" *ngIf="imgURL">

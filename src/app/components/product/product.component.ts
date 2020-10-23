@@ -28,7 +28,8 @@ export class ProductComponent implements OnInit {
     }
 
   ngOnInit(): void {
-
+        console.log("OK"+this.route.snapshot.params.idCategorie);
+        console.log("OK product"+this.route.snapshot.params.idCategorie);
         this.router.events.subscribe((val) => {
           if (val instanceof NavigationEnd) {
             let url = val.url;        
@@ -39,7 +40,7 @@ export class ProductComponent implements OnInit {
               this.getAllProduct("products/search/productSelected?page=" + this.page + "&size=" + this.size);
             } else if (p1==2) {
               //récupération idCategorie
-             let idCategorie=this.route.snapshot.params.idCategorie;
+              let idCategorie=this.route.snapshot.params.idCategorie;
               this.getCategory(idCategorie);
               this.getAllProduct("categories/" + idCategorie + "/products?page=" + this.page + "&size=" + this.size);
             }else if(p1 == 4){
@@ -48,9 +49,7 @@ export class ProductComponent implements OnInit {
             }else if(p1 == 5){
               this.title="Produits en promotion :";
               this.getAllProduct("products/search/productEnPromotion?page="+this.page+"&size="+this.size);
-              let idCat = this.route.snapshot.params.idCategorie;
-              this.title= 'Produits de la catégorié : '+idCat;
-              this.getAllProduct("categories/" + idCat + "/products?page=" + this.page + "&size=" + this.size);
+              
             }else if(p1==3){
                 this.title='Produits disponible :';
                 this.getAllProduct("products/search/productDisponible?page="+this.page+"&size="+this.size);  

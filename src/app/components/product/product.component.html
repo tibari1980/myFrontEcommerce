@@ -1,4 +1,13 @@
-<div  *ngIf="title" class="alert alert-dark"><h2>{{title}}</h2></div>
+<mat-toolbar *ngIf="title" color="primary">
+  <div fxHide.gt-xs>
+      <button mat-icon-button>
+          <mat-icon>menu</mat-icon>
+      </button>
+  </div>
+  <div>
+      <h1>{{title}}</h1>
+  </div>
+</mat-toolbar>
 <div *ngIf="products" class="card-columns spacer">
       <div class="card" style="width:400px" *ngFor="let product of products._embedded.products">
         <img class="card-img-top" src="{{this.catalogueService.endPoint+'/getPhtoProduct/'+product.code}}" alt="Card image" style="height: 500px;width: 400px;">
