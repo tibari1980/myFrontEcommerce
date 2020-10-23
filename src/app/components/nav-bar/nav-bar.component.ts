@@ -20,4 +20,18 @@ export class NavBarComponent implements OnInit {
     this.router.navigateByUrl('/products/1/0');
   }
 
+  onGetProductDisponible(){
+    this.currentCategorie=undefined;
+    this.router.navigateByUrl('/products/4/0');
+  }
+  onGetProductPromotion(){
+    this.currentCategorie=undefined;
+    this.router.navigateByUrl('/products/5/0');
+  }
+
+
+  //méthode pour récupérer la liste des categories pour admin
+  onGetAllCategories(){
+    this.router.navigateByUrl('/admin/categories');
+  }
 }

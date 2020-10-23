@@ -22,8 +22,20 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">produits</a>
           <div class="dropdown-menu">
-            <a class="dropdown-item" [routerLink]="['/products/','promotion']">En promotion</a>
-            <a class="dropdown-item" [routerLink]="['/products/','disponible']">Disponible</a>
+            <a class="dropdown-item" (click)="onGetProductPromotion()">En promotion</a>
+            <a class="dropdown-item" (click)="onGetProductDisponible()">Disponible</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="#">Something else here</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Separated link</a>
+          </div>
+        </li>
+        <!--Admin site-->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Admin</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item"  [routerLink]="['admin/categories']">Gestion Categories</a>
+            <a class="dropdown-item" [routerLink]="['admin/produits']">Gestion Produits</a>
             <a class="dropdown-item" href="#">Another action</a>
             <a class="dropdown-item" href="#">Something else here</a>
             <div class="dropdown-divider"></div>

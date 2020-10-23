@@ -1,3 +1,4 @@
+import { Product } from './../../classes/product';
 import { CatalogueService } from './../../services/catalogue.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular/router';
@@ -19,45 +20,33 @@ export class ProductComponent implements OnInit {
   progress: number;
   currentFileUpload: any;
   title:string='';
+  categoryName:string='';
+  categorie:any;
   constructor(private catalogueService: CatalogueService,
     private route: ActivatedRoute,
     private router: Router) {
     }
 
   ngOnInit(): void {
-     this.router.events.subscribe((val)=>{
-         if(val instanceof NavigationEnd || val instanceof NavigationStart){
-           let url=val.url;
-           console.log('tibari'+url);
-            let typeProduct = this.route.snapshot.params.nameOfProductAffiche;
-            console.log('Tarik '+typeProduct);
-            if(typeProduct===''){
-              this.title='Produits en promotion :';
-              this.getAllProduct("products/search/productEnPromotion?page="+this.page+"&size="+this.size);
-              console.log('vous etes ici ok');
-            }
-            if(typeProduct==="promotion"){
-              this.title='Produits en promotion :';
-              this.getAllProduct("products/search/productEnPromotion?page="+this.page+"&size="+this.size);
-              }else if(typeProduct==="disponible"){
-                this.title='Produits disponible :';
-                this.getAllProduct("products/search/productDisponible?page="+this.page+"&size="+this.size);  
-              }
-          }
-     })
+        
         this.router.events.subscribe((val) => {
           if (val instanceof NavigationEnd) {
             let url = val.url;        
             let p1 = this.route.snapshot.params.p1;
+            let idCategorie=this.route.snapshot.params.idCategorie;
             if (p1 == 1) {
               this.title="Produits sélectionné :";
               this.getAllProduct("products/search/productSelected?page=" + this.page + "&size=" + this.size);
-            } else if (p1 == 2) {
+            } else if (p1==2 && idCategorie!=0) {
               //récupération idCategorie
-
-              let idCat = this.route.snapshot.params.idCategorie;
-              this.title= 'Produits de la catégorié : '+idCat;
-              this.getAllProduct("categories/" + idCat + "/products?page=" + this.page + "&size=" + this.size);
+              this.getCategory(idCategorie);
+              this.getAllProduct("categories/" + idCategorie + "/products?page=" + this.page + "&size=" + this.size);
+            }else if(p1 == 4){
+              this.title="Produits disponible :";
+              this.getAllProduct("products/search/productDisponible?page="+this.page+"&size="+this.size);
+            }else if(p1 == 5){
+              this.title="Produits en promotion :";
+              this.getAllProduct("products/search/productEnPromotion?page="+this.page+"&size="+this.size);
             }
           }
         });
@@ -65,13 +54,12 @@ export class ProductComponent implements OnInit {
         if (p1 == 1) {
           this.title='Produits sélectionné :';
           this.getAllProduct("products/search/productSelected?page=" + this.page + "&size=" + this.size);
-        }      
+        }     
   }
   getAllProduct(url) {
     this.catalogueService.getData(url)
       .subscribe(data => {
         this.products = data;
-        console.log(this.products);
       }, error => {
         console.log(error);
       })
@@ -82,23 +70,21 @@ export class ProductComponent implements OnInit {
     this.currentProduct=product;
     this.editPhoto=true;
   }
-  onSelectedFile(event){
-    this.selectedFiles=event.target.files;
-  }
 
-  uploadPhotoProduct(){
-    this.progress=0;
-     this.currentFileUpload=this.selectedFiles.item(0);;
-      this.catalogueService.uploadDonnesProducts(this.currentFileUpload,this.currentProduct.code)
-      .subscribe(event=>{
-        if(event.type===HttpEventType.UploadProgress){
-          this.progress=Math.round(100 * event.loaded /event.total);
-        }else if(event instanceof HttpResponse){
-          alert('Photo dowloaded successfully!:');
-        }
-      },erro=>{
-            alert('Bad request');
-      });
-      
+
+    onShowProduct(product:Product){
+      console.log("le code est "+product.code);
+      this.router.navigateByUrl('/product/'+product.code);
+    }
+
+    getCategory(idCategorie:number){
+      this.catalogueService.findOne('/categories/'+idCategorie)
+      .subscribe(cat=>{
+        this.categorie=cat;
+        this.categoryName=cat['name'];
+        this.title="Produits de la catégorié :" + this.categoryName;
+      },error=>{
+        console.log(error);
+      })
     }
 }

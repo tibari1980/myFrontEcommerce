@@ -17,7 +17,12 @@ export class CatalogueService {
   getData(url:string){
     return this.http.get(this.endPoint+url);
   }
-
+  createData(fomrData:FormData,url:string):Observable<any>{
+    return this.http.post(this.endPoint+url,fomrData);
+  }
+  findOne(url){
+    return this.http.get(this.endPoint+url);
+  }
   uploadDonnesProducts(file:File,idProduct:number):Observable<HttpEvent<{}>> {
     let formData:FormData=new FormData();
     formData.append('file',file);
@@ -27,4 +32,6 @@ export class CatalogueService {
     })
     return this.http.request(req);
   }
+
+
 }

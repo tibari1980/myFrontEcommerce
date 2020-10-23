@@ -1,0 +1,51 @@
+<div *ngIf="title" class="alert alert-dark spaceTitle">
+  <h2>{{title}}</h2>
+</div>
+<div class="row">
+  <div class="col-md-12" style="text-align: center;"><a (click)="showProductsSelected()"><strong
+        style="cursor: pointer;color: blue;">afficher la liste des produits</strong> </a></div>
+</div>
+<div class="row">
+  <div *ngIf="product" class="card-columns col-md-6 spacer styleDivProduct">
+
+    <div class="card" style="width:400px" *ngIf="product">
+      <img *ngIf="!showPhoto" class="card-img-top"
+        src="{{this.catalogueService.endPoint+'/getPhtoProduct/'+product.code}}" alt="{{product.name}}"
+        style="height: 500px;width: 400px;">
+      <img *ngIf="showPhoto" class="card-img-top" src="{{imgURL}}" alt="{{product.name}}"
+        style="height: 500px;width: 500px; margin: auto;">
+      <div class="card-body">
+        <h4 class="card-title">{{product.name}}</h4>
+        <span>{{product.currentPrice | number:'0.2'}}</span>
+        <p class="card-text">{{product.description}}</p>
+        <span *ngIf="!showFormEditFile" (click)="onShowFormEditFile()" class="btn btn-primary btn-lg"><i
+            class="fa fa-edit" style="width:20px;"></i>Modifié la photo</span>
+        <br><br>
+        <div class="form-group" *ngIf="showFormEditFile">
+          <label for="inputFile">Choisir la photo :</label>
+          <input id="inputFile" class="form-control-file" type="file" accept="image/*" (change)="onSelectFile($event)">
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div *ngIf="product && imgURL" class="card-columns col-md-6 spacer styleDivProduct">
+    <div class="card" style="width:400px" *ngIf="product">
+      <img class="card-img-top" src="{{imgURL}}" alt="{{product.name}}"
+        style="height: 500px;width: 500px;margin: auto;">
+      <div class="card-body">
+        <h4 class="card-title">{{product.name}}</h4>
+        <span>{{product.currentPrice | number:'0.2'}}</span>
+        <p class="card-text">{{product.description}}</p><br>
+        <div style="margin-top:40px;">
+          <button class="btn btn-primary btn-lg" (click)="uploadPhotoProduct()"><i class="fa fa-download"
+              style="width:20px;"></i>Upload</button>
+          {{progress}}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<div>
+</div>

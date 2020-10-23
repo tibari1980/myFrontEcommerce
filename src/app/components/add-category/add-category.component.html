@@ -1,0 +1,54 @@
+<mat-toolbar color="primary">
+    <div fxHide.gt-xs>
+        <button mat-icon-button>
+            <mat-icon>menu</mat-icon>
+        </button>
+    </div>
+    <div>
+        <h1>Gestion Categorie :</h1>
+    </div>
+</mat-toolbar>
+<div class="row" style="margin-top: 25px;">
+    <div class="col-3"></div>
+    <div class="col-5">
+        <form #categoryForm="ngForm" novalidate (ngSubmit)="onSubmitCat()">
+            <div class="form-group">
+                <label for="nameId">Nom </label>
+                <input type="text" id="nameId" required #nom="ngModel" [(ngModel)]="categoryModule.nom" name="nom"
+                    minlength="4" maxlength="40" pattern="[a-zA-Z]+" class="form-control">
+                <div class="alert-danger" *ngIf="!nom.valid && nom.touched ">
+                    <div *ngIf="nom.errors.required">Le champs nom est obligatoire</div>
+                    <div *ngIf="nom.errors.minlength">Ce champ doit contenir ou moins :
+                        {{nom.errors.minlength.actualLength}} | {{nom.errors.minlength.requiredLength}} </div>
+                    <div *ngIf="nom.errors.pattern">Ce champs doit être alphanumérique</div>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="descriptionId">Description </label>
+                <textarea type="text" #description="ngModel" required id="descriptionId" name="description"
+                    pattern="[a-zA-Z]+" minlength="10" maxlength="240" [(ngModel)]="categoryModule.description"
+                    class="form-control">
+            </textarea>
+                <div class="alert-danger" *ngIf="!description.valid && description.touched">
+                    <div *ngIf="description.errors.required">Ce champ est obligatoire</div>
+                    <div *ngIf="description.errors.minlength"> Ce champ doit contenir ou moins :
+                        {{description.errors.minlength.actualLength}} | {{description.errors.minlength.requiredLength}}
+                    </div>
+                    <div *ngIf="description.errors.pattern">Ce champs doit contenir les lettres et les chiffres!!!</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>File Upload </label>
+                <input type="file" accept="image/*" (change)="onSelectFile($event)">
+            </div>
+            <div class="form-group">
+                <img [src]="imgURL" height="200" *ngIf="imgURL">
+            </div>
+            <div class="from-group">
+                <button [disabled]="categoryForm.form.invalid" type="submit" class="btn btn-dark"><i class="fa fa-database"></i> Submit</button>
+                        <a class="btn btn-outline-success" routerLink="/admin/categories"><i class="fa fa-plus-square"></i> Liste categorie</a>
+            </div>
+        </form>
+    </div>
+</div>
