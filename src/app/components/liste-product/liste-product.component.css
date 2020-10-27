@@ -13,15 +13,7 @@ label
 
 }
 
-div.scroll
-{
 
-height:500PX;
-FLOAT: left;
-
-padding: 1%;
-overflow:scroll;
-}
 h1
 {
     font-size: 40px; 
@@ -30,13 +22,11 @@ h1
 }
 th
 {
-    font-size: 18px; 
+    font-size: 16px; 
     text-align: center;
     /* Titres de 40 pixels */
 }
-td{
-    width: 50px;
-}
+
 label
 {
     font-weight: bold;
@@ -46,15 +36,15 @@ label
 
 .imageListe {
     height:30px;
-    position:sticky;
+    float: left;
+    
     }
-  
     .imageListe img {
     width:80px;
     height:60px;
+    float: right;
     }
     .imageListe img:hover {
     width:300px;
     height:400px;
-    align-content: center;
     }
