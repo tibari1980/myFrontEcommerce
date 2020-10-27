@@ -1,12 +1,4 @@
-div.scroll
-{
 
-height:500PX;
-FLOAT: left;
-
-padding: 1%;
-overflow:scroll;
-}
 h1
 {
     font-size: 80px; 
@@ -42,10 +34,12 @@ th
     text-align: center;
     /* Titres de 40 pixels */
 }
+td{
+    width: 50px;
+}
 label
 {
     font-weight: bold;
-
    color :"#0000FF";
 
 }

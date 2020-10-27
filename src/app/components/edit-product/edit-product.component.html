@@ -1,1 +1,184 @@
-<p>edit-product works!</p>
+<mat-toolbar color="primary">
+    <div fxHide.gt-xs>
+        <button mat-icon-button>
+            <mat-icon>menu</mat-icon>
+        </button>
+    </div>
+    <div>
+        <h1>Gestion produit :</h1>
+    </div>
+</mat-toolbar>
+
+<div class="row" style="margin-top: 25px;">
+    <div class="col-3"></div>
+    <div class="col-5 formsStyle">
+        <form #productForm="ngForm" novalidate (ngSubmit)="onSubmitProduct()">
+            <div class="form-group">
+                <label for="nameId">Nom </label>
+                <input type="text" id="nameId" required #name="ngModel" [(ngModel)]="productModule.name" name="name"
+                    minlength="4" maxlength="40" pattern="\s*[a-zA-Zéèàê ]+\s*$" class="form-control">
+                <div class="alert alert-danger" *ngIf="!name.valid && name.touched ">
+                    <div *ngIf="name.errors.required">Le champs nom est obligatoire</div>
+                    <div *ngIf="name.errors.minlength">Ce champ doit contenir ou moins :
+                        {{name.errors.minlength.actualLength}} | {{name.errors.minlength.requiredLength}} </div>
+                    <div *ngIf="name.errors.pattern">Ce champs doit être alphanumérique</div>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="descriptionId">Description </label>
+                <textarea type="text" #description="ngModel" required id="descriptionId" name="description"
+                    pattern="\s*[a-zA-Zéèàê ]+\s*$" minlength="10" maxlength="240"
+                    [(ngModel)]="productModule.description" class="form-control">
+            </textarea>
+                <div class="alert alert-danger" *ngIf="!description.valid && description.touched">
+                    <div *ngIf="description.errors.required">Ce champ est obligatoire</div>
+                    <div *ngIf="description.errors.minlength"> Ce champ doit contenir ou moins :
+                        {{description.errors.minlength.actualLength}} | {{description.errors.minlength.requiredLength}}
+                    </div>
+                    <div *ngIf="description.errors.pattern">Ce champs doit contenir les lettres et les chiffres!!!</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="currentPriceId">Prix Actuel </label>
+                <input type="number" #currentPrice="ngModel" required id="currentPriceId" name="currentPrice"
+                    pattern="^[1-9]\d{0,2}(\.\d{1,2})?$" minlength="1" maxlength="4"
+                    [(ngModel)]="productModule.currentPrice"
+                    minlength="2" 
+                    class="form-control"/>
+                    <div class="alert alert-danger" *ngIf="!currentPrice.valid && currentPrice.touched">
+                        <div *ngIf="currentPrice.errors.required">Ce champ est obligatoire</div>
+                        <div *ngIf="currentPrice.errors.pattern">Ce champs doit contenir 4 chiffre et que les chiffres</div>
+                    </div>
+            </div>
+            <div class="form-group" *ngIf="categories">
+                <label for="catId">Catégorie :</label>
+                <select ngModel required  (change)="selectCategorie($event.target.value)" 
+                         name="cat"  
+                         #cat="ngModel"
+                         class="custom-select" id="catId">
+                    <option  value=""></option>
+                    <option *ngFor="let cat of categories._embedded.categories" value="{{cat.code}}"  [ngClass]="currentCategorie==cat.name?'selected':''">{{cat.name}}
+                    </option>
+
+                </select>
+                <div class="alert alert-danger" *ngIf="cat.touched && !cat.valid" >
+                    <div class="alert alert-danger" *ngIf="cat.errors.required" >La catégorie est obligatoire</div>
+                </div>
+
+            </div>
+            <div class="form-group">
+                <label for="imageProduct">File Upload </label>
+                <input type="file" id="imageProducts" accept="image/*" (change)="onSelectFile($event)">
+            </div>
+            <div class="form-group" style="text-align: center;">
+                <img [src]="imgURL"  class="rounded-circle" height="300px" width="350px"
+                     *ngIf="imgURL">
+            </div>
+            <div class="form-group" style="text-align: center;" *ngIf="productModule.code!=null">
+                <img 
+                    src="{{this.cataloguesServices.endPoint+'getPhtoProduct/'+productModule.code}}" 
+                    class="rounded-circle" height="300px" width="350px">
+            </div>
+            <div class="form-group">
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" name="available"
+                            [(ngModel)]="productModule.available" id="available">
+                        Disponible
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" name="promotion"
+                            [(ngModel)]="productModule.promotion" id="promotion">
+                        En promotion
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" name="selected"
+                            [(ngModel)]="productModule.selected" id="promotion">
+                        Sélectionné :
+                    </label>
+                </div>
+            </div>
+            <div class="from-group">
+                <button data-toggle="modal" 
+                    [disabled]="productForm.form.invalid" 
+                    data-target="#myModalProduct" type="submit" class="btn btn-dark">
+                    <i class="fa fa-database"></i> Submit</button>
+                <a class="btn btn-outline-success" routerLink="/admin/categories"><i class="fa fa-plus-square"></i>
+                    Liste categorie</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+<div class="container" *ngIf="productSaved!=null">
+    <!-- The Modal -->
+    <div class="modal fade" id="myModalProduct" style="text-align: center;">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title" class="alert alert-info" style="text-align: center;">Produit sauvegardé avec success</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          
+          <!-- Modal body -->
+          <div class="modal-body">
+            <div class="form-group">
+              <label>Code :</label>
+              <label>{{productSaved.code}}</label>
+            </div>
+            <div class="form-group">
+                <label>Nom :</label>
+                <label>{{productSaved.name}}</label>
+              </div>
+              <div class="form-group">
+                <label>Description :</label>
+                        <label>
+                            <p> 
+                                {{productSaved.description}} </p>
+                        </label>
+                
+              </div>
+              <div class="form-group">
+                <label>Prix actuel :</label>
+                <label><p >{{productSaved.currentPrice}} </p></label>
+              </div>
+              <div class="form-group">
+                <label>Disponible :</label>
+                <label><p>{{productSaved.available}} </p></label>
+              </div>
+              <div class="form-group">
+                <label>En promotion :</label>
+                <label><p>{{productSaved.promotion}} </p></label>
+              </div>
+              <div class="form-group">
+                <label>En promotion :</label>
+                <label><p>{{productSaved.selected}} </p></label>
+              </div>
+              <div class="form-group">
+                <img [src]="imgURL" height="200" *ngIf="imgURL">  
+              </div>
+          </div>
+          
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger btn-lg" (click)="onGetAllProducts()" data-dismiss="modal">Close</button>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    
+  </div>

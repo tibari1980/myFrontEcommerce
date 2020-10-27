@@ -47,7 +47,7 @@
         <div style="margin-top:40px;">
           <button class="btn btn-primary btn-lg" (click)="uploadPhotoProduct()"><i class="fa fa-download"
               style="width:20px;"></i>Upload</button>
-          {{progress}}
+          <mat-progress-spinner value="{{progress}}" title="Updated successfully" [diameter]="50" ></mat-progress-spinner>
         </div>
       </div>
 

@@ -1,22 +1,17 @@
-<mat-toolbar color="primary">
-    <div fxHide.gt-xs>
-        <button mat-icon-button>
-            <mat-icon>menu</mat-icon>
-        </button>
-    </div>
-    <div>
-        <h1>Gestion Categories :</h1>
-    </div>
-</mat-toolbar>
+
+<mat-spinner *ngIf="showDataSpinner" color="black" [diameter]="50" ></mat-spinner>
+<BR><br>
 <table *ngIf="categories" class="table table-hover">
     <thead class="thead-light">
-    <th></th>
+    <th>
+        <a class="btn btn-primary btn-sm" (click)="onCreateCategorie()"><i class="fa fa-plus-square"></i> Créé</a>
+    </th>
     <th>CODE</th>  
     <th>NOM</th>
-    <th>DESCRIPTION</th>
+    <th width="100px">DESCRIPTION</th>
     <th>PHOTO</th>
     <th>
-    <a class="btn btn-outline-success" (click)="onCreateCategorie()"><i class="fa fa-plus-square"></i> Créé Categorie</a>
+    
     </th>
     </thead>
     <tbody>
@@ -24,8 +19,10 @@
      <td><a class="btn text-danger" (click)="onEditCategorie(item.code)"><i class="fa fa-edit fa-lg"></i> </a></td>
     <td>{{item.code}}</td>
     <td>{{item.name}}</td>
-    <td>{{item.description}}</td>
-    <td >{{item.photoName}}</td>
+    <td><p>{{item.description}}</p></td>
+    <td >
+        <img src="{{this.cataloguesService.endPoint+'getPhtoProduct/'+item.code}}" height="60" width="80">
+    </td>
     <td>
     <a class="btn text-danger" (click)="onDelete(item.code)"><i class="fa fa-trash fa-lg"></i> </a>
     <a class="btn text-danger" (click)="showCategory(item)"><i class="fa fa-pencil fa-lg"></i> </a>

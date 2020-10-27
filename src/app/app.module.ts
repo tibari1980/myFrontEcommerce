@@ -1,4 +1,4 @@
-
+import { MaterialModule } from './material/material.module';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -21,9 +21,9 @@ import { EditProductComponent } from './components/edit-product/edit-product.com
 import { DetailProductComponent } from './components/detail-product/detail-product.component';
 import { AddCategoryComponent } from './components/add-category/add-category.component';
 
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatIconModule } from '@angular/material/icon';
 import { ListeProductComponent } from './components/liste-product/liste-product.component';
+
+
 
 
 
@@ -52,10 +52,8 @@ import { ListeProductComponent } from './components/liste-product/liste-product.
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
-    MatToolbarModule,
-    MatIconModule
+    MaterialModule
   ],
-  exports:[MatToolbarModule],
   providers: [],
   bootstrap: [AppComponent]
 })

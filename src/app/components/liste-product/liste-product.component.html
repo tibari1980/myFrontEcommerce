@@ -1,1 +1,56 @@
-<p>liste-product works!</p>
+<mat-toolbar color="primary">
+    <div fxHide.gt-xs>
+        <button mat-icon-button>
+            <mat-icon>menu</mat-icon>
+        </button>
+    </div>
+    <div>
+        <h1>Gestion Produits :</h1>
+    </div>
+   
+</mat-toolbar>
+<mat-spinner *ngIf="showDataSpinner" color="black" [diameter]="50" ></mat-spinner>
+<BR><br>
+<table *ngIf="products" class="table table-hover">
+    <thead class="thead-light">
+    <th>
+        <a class="btn btn-primary btn" (click)="onCreateProduct()"><i class="fa fa-plus-square"></i> Créé Categorie</a>
+    </th>
+    <th>CODE</th>  
+    <th>NOM</th>
+    <th width="100px">DESCRIPTION</th>
+    <th>PRIX ACTUEL</th>
+    <th>DISPONIBLE</th>
+    <th>SELECTIONNE</th>
+    <td>EN PROMOTION</td>
+    <td>PHOTO</td>
+    </thead>
+    <tbody>
+    <tr  *ngFor="let item of products._embedded.products">
+     <td><a class="btn text-danger" (click)="onEditProduct(item.code)"><i class="fa fa-edit fa-lg"></i> </a></td>
+    <td>{{item.code}}</td>
+    <td>{{item.name}}</td>
+    <td><p>{{item.description}}</p></td>
+    <td>{{item.currentPrice }}</td>
+    <td>{{item.available}}</td>
+    <td>{{item.selected}}</td>
+    <td>{{item.promotion}}</td>
+    <td  class="imageListe">
+        <p>
+            <img  src="{{this.catalogueService.endPoint+'getPhtoProduct/'+item.code}}" class="rounded-circle">
+        </p>
+        
+    </td>
+    <td>
+    <a class="btn text-danger" (click)="onDeleteProduct(item)"><i class="fa fa-trash fa-lg"></i> </a>
+    <a class="btn text-danger" (click)="showProduct(item)"><i class="fa fa-pencil fa-lg"></i> </a>
+    </td>
+    </tr>
+    </tbody>
+    </table>
+    
+    
+    
+    
+    
+    

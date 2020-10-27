@@ -1,0 +1,13 @@
+.form-control.ng-touched.ng-invalid{
+    border: 2px solid red;
+}
+.custom-select.ng-touched.ng-invalid{
+    border: 2px solid red;
+}
+.formsStyle{
+    border-radius: 25px 10px ;
+    border: 2px solid black;
+    font-size: 16px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+}

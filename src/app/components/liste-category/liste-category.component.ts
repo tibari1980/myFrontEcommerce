@@ -1,7 +1,10 @@
-import { Router } from '@angular/router';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { Router, ActivatedRoute, NavigationEnd, RouterEvent } from '@angular/router';
 import { Category } from './../../classes/category';
 import { Component, OnInit } from '@angular/core';
 import { CatalogueService } from 'src/app/services/catalogue.service';
+import { error } from 'protractor';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-liste-category',
@@ -13,11 +16,20 @@ export class ListeCategoryComponent implements OnInit {
   page:number=0;
   size:number=20;
   categories: Object;
+  showDataSpinner:boolean=false;
+  mySubscription:any;
   constructor(private cataloguesService:CatalogueService,
-              private route:Router) { }
+              private route:Router,private router:ActivatedRoute) {
+              
+              }
 
   ngOnInit(): void {
+   
     this.getAllCategories();
+    this.showDataSpinner=true;
+    setTimeout(()=>{
+      this.showDataSpinner=false;
+    },2000);
   }
   //all Categories
   getAllCategories(){
@@ -50,4 +62,9 @@ export class ListeCategoryComponent implements OnInit {
   onEditCategorie(code:number){
     this.route.navigate(['admin/categorie/edit/'+code]);
   }
+ 
+  showCategory(item){
+    console.log(item);
+  }
+
 }

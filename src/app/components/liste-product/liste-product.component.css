@@ -1,0 +1,60 @@
+
+h1
+{
+    font-size: 80px; 
+    text-align: center;
+    /* Titres de 40 pixels */
+}
+label
+{
+    font-weight: bold;
+
+   color :"#0000FF";
+
+}
+
+div.scroll
+{
+
+height:500PX;
+FLOAT: left;
+
+padding: 1%;
+overflow:scroll;
+}
+h1
+{
+    font-size: 40px; 
+    text-align: center;
+    /* Titres de 40 pixels */
+}
+th
+{
+    font-size: 18px; 
+    text-align: center;
+    /* Titres de 40 pixels */
+}
+td{
+    width: 50px;
+}
+label
+{
+    font-weight: bold;
+   color :"#0000FF";
+}
+
+
+.imageListe {
+    height:30px;
+    position:sticky;
+    }
+  
+    .imageListe img {
+    width:80px;
+    height:60px;
+    }
+    .imageListe img:hover {
+    width:300px;
+    height:400px;
+    align-content: center;
+    }

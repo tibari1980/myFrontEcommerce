@@ -1,7 +1,9 @@
 import { HttpClient, HttpEvent, HttpHeaders, HttpRequest,HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { createContentChild } from '@angular/compiler/src/core';
 
 
 @Injectable({
@@ -15,6 +17,7 @@ export class CatalogueService {
       'Content-Type': 'application/json'
     })
   }
+ 
   constructor(private http: HttpClient) { }
 
   /*
@@ -34,6 +37,19 @@ export class CatalogueService {
     );
   }
   
+  updateData(data:Object,url:string,id:number):Observable<Object>{
+    return this.http.put<Object>(this.endPoint+url+"/"+id,JSON.stringify(data),this.httpOptions)
+    .pipe(
+      catchError(this.errorHandler)
+    );
+  }
+
+  updataDataWidthOtherParams(data:Object,url:string,idProd:number,idCate:number){
+    return this.http.put<Object>(this.endPoint+url+"/"+idProd+"/"+idCate,JSON.stringify(data),this.httpOptions)
+    .pipe(
+      catchError(this.errorHandler)
+    );
+  }
   /*
   ** Méthode permet de supprime un objet (DataRessource)
   */
@@ -68,7 +84,6 @@ export class CatalogueService {
   */
   uploadDonnesCategories(file:File,idCategorie:number):Observable<HttpEvent<{}>> {
     let formData:FormData=new FormData();
-    console.log('identifiant categroie jihte service '+idCategorie);
     formData.append('file',file);
     const req=new HttpRequest('POST',this.endPoint+"/uploadPhotoCategorie/"+idCategorie,formData,{
       reportProgress:true,

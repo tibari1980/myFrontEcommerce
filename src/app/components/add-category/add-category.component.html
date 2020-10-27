@@ -14,11 +14,8 @@
         <form #categoryForm="ngForm" novalidate (ngSubmit)="onSubmitCat()">
             <div class="form-group">
                 <label for="nameId">Nom </label>
-                <input type="text" id="nameId" 
-                       required #name="ngModel" 
-                       [(ngModel)]="categoryModule.name" 
-                       name="name"
-                    minlength="4" maxlength="40" pattern="[a-zA-Z]+" class="form-control">
+                <input type="text" id="nameId" required #name="ngModel" [(ngModel)]="categoryModule.name" name="name"
+                    minlength="4" maxlength="40" pattern="\s*[a-zA-Zéèàê ]+\s*$" class="form-control">
                 <div class="alert-danger" *ngIf="!name.valid && name.touched ">
                     <div *ngIf="name.errors.required">Le champs nom est obligatoire</div>
                     <div *ngIf="name.errors.minlength">Ce champ doit contenir ou moins :
@@ -30,8 +27,8 @@
             <div class="form-group">
                 <label for="descriptionId">Description </label>
                 <textarea type="text" #description="ngModel" required id="descriptionId" name="description"
-                    pattern="[a-zA-Z]+" minlength="10" maxlength="240" [(ngModel)]="categoryModule.description"
-                    class="form-control">
+                    pattern="\s*[a-zA-Zéèàê ]+\s*$" minlength="10" maxlength="240"
+                    [(ngModel)]="categoryModule.description" class="form-control">
             </textarea>
                 <div class="alert-danger" *ngIf="!description.valid && description.touched">
                     <div *ngIf="description.errors.required">Ce champ est obligatoire</div>
@@ -43,15 +40,62 @@
             </div>
             <div class="form-group">
                 <label for="imageCat">File Upload </label>
-                <input type="file" id="imageCat"   accept="image/*"  (change)="onSelectFile($event)">
+                <input type="file" id="imageCat" accept="image/*" (change)="onSelectFile($event)">
             </div>
             <div class="form-group">
                 <img [src]="imgURL" height="200" *ngIf="imgURL">
             </div>
             <div class="from-group">
-                <button [disabled]="categoryForm.form.invalid" type="submit" class="btn btn-dark"><i class="fa fa-database"></i> Submit</button>
-                        <a class="btn btn-outline-success" routerLink="/admin/categories"><i class="fa fa-plus-square"></i> Liste categorie</a>
+                <button [disabled]="categoryForm.form.invalid" 
+                   data-toggle="modal" data-target="#myModalCategory" 
+                   type="submit" class="btn btn-dark">
+                    <i class="fa fa-database"></i> Submit</button>
+                <a class="btn btn-outline-success" routerLink="/admin/categories"><i class="fa fa-plus-square"></i>
+                    Liste categorie</a>
             </div>
         </form>
     </div>
 </div>
+
+
+<div class="container" *ngIf="categorieSaved">
+    <!-- The Modal -->
+    <div class="modal fade" id="myModalCategory" style="text-align: center;">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title" class="alert alert-info">Categorie sauvegardé avec success</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          
+          <!-- Modal body -->
+          <div class="modal-body">
+            <div class="form-group">
+              <label>Code :</label>
+              <label>{{categorieSaved.code}}</label>
+            </div>
+            <div class="form-group">
+                <label>Nom :</label>
+                <label>{{categorieSaved.name}}</label>
+              </div>
+              <div class="form-group">
+                <label>Description :</label>
+                <label><p>{{categorieSaved.description}} </p></label>
+              </div>
+              <div class="form-group">
+                <img [src]="imgURL" height="200" *ngIf="imgURL">  
+              </div>
+          </div>
+          
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger btn-lg" (click)="onGetAllCategories()" data-dismiss="modal">Close</button>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    
+  </div>
