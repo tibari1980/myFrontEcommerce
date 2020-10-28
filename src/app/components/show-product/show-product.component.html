@@ -23,7 +23,7 @@
         style="height: 500px;width: 500px; margin: auto;">
       <div class="card-body">
         <h4 class="card-title">{{product.name}}</h4>
-        <span>{{product.currentPrice | number:'0.2'}}</span>
+        <span>{{(product.currentPrice | number:'1.2-2')+' €'}}</span>
         <p class="card-text">{{product.description}}</p>
         <span *ngIf="!showFormEditFile" (click)="onShowFormEditFile()" class="btn btn-primary btn-lg"><i
             class="fa fa-edit" style="width:20px;"></i>Modifié la photo</span>

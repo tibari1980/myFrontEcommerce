@@ -166,7 +166,7 @@ export class EditProductComponent implements OnInit {
   onGetAllProducts()
   {
     this.router.navigate(['admin/produits']);
-
   }
+  
 
 }
