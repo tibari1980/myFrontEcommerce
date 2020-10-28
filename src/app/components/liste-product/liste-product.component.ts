@@ -53,8 +53,8 @@ export class ListeProductComponent implements OnInit {
          })
        }
   }
-  showProduct():void{
-
+  onShowProduct(codeProduct:number):void{
+    this.route.navigate(['admin/produit/detail/'+codeProduct]);
   }
 
   onEditProduct(code:number):void{

@@ -56,9 +56,11 @@
                 <select ngModel required  (change)="selectCategorie($event.target.value)" 
                          name="cat"  
                          #cat="ngModel"
+                         [(ngModel)]="currentCategorie.code"
                          class="custom-select" id="catId">
                     <option  value=""></option>
-                    <option *ngFor="let cat of categories._embedded.categories" value="{{cat.code}}"  [ngClass]="currentCategorie==cat.name?'selected':''">{{cat.name}}
+                    <option *ngFor="let cat of categories._embedded.categories" 
+                            [value]="cat.code" >{{cat.name}}
                     </option>
 
                 </select>

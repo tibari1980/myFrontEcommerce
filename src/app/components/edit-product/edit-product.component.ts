@@ -55,6 +55,7 @@ export class EditProductComponent implements OnInit {
     this.cataloguesServices.findOne("products/"+code+"/category")
     .subscribe(data=>{
       this.currentCategorie=data;
+      console.log('current Categorie v'+this.currentCategorie.name)
     },error=>{
       console.log(error);
     })
