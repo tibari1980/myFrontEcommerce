@@ -22,6 +22,7 @@ export class EditCategoryComponent implements OnInit {
   currentFileUpload: any;
   progress: number;
   categorieSaved={code:0,name:'',description:'',photoName:''};
+  timeSt:number=0;
   constructor(public catalogueService:CatalogueService,
               private router:ActivatedRoute,
               private route:Router) { }
@@ -93,6 +94,7 @@ export class EditCategoryComponent implements OnInit {
          this.progress=Math.round(100 * event.loaded /event.total);
        }else if(event instanceof HttpResponse){
          console.log('Photo updated successfully:)');
+         this.timeSt=Date.now();
        }
      },erro=>{
            alert('Bad request');
@@ -103,4 +105,8 @@ export class EditCategoryComponent implements OnInit {
     this.route.navigate(['admin/categories'])
     
   }
+
+   getTimeStamps(){
+     return this.timeSt;
+   }
 }

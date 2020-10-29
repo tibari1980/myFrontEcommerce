@@ -18,13 +18,13 @@ export class ListeCategoryComponent implements OnInit {
   categories: Object;
   showDataSpinner:boolean=false;
   mySubscription:any;
+  timeSt:number=0;
   constructor(private cataloguesService:CatalogueService,
               private route:Router,private router:ActivatedRoute) {
-              
               }
 
   ngOnInit(): void {
-   
+    this.timeSt=Date.now();
     this.getAllCategories();
     this.showDataSpinner=true;
     setTimeout(()=>{
@@ -67,4 +67,7 @@ export class ListeCategoryComponent implements OnInit {
     console.log(item);
   }
 
+  getTimeStamps(){
+    return this.timeSt;
+  }
 }

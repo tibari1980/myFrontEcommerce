@@ -24,6 +24,7 @@ export class ShowProductComponent implements OnInit {
   selectedFiles: any;
   currentProduct: any;
   showPhoto: boolean=false;
+  timeS: number=0;
   constructor(private catalogueService: CatalogueService, 
               private route: ActivatedRoute,
               private router:Router) { }
@@ -84,6 +85,7 @@ export class ShowProductComponent implements OnInit {
          this.progress=Math.round(100 * event.loaded /event.total);
        }else if(event instanceof HttpResponse){
          alert('Photo dowloaded successfully!:');
+         this.timeS=Date.now();
          this.showPhoto=true;
        }
      },erro=>{
@@ -93,6 +95,11 @@ export class ShowProductComponent implements OnInit {
 
   showProductsSelected(){
     this.router.navigateByUrl('/products/1/0');    
+  }
+
+  getTimeStamps(){
+   
+    return this.timeS;
   }
 }
 

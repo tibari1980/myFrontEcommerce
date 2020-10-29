@@ -22,45 +22,45 @@ export class ProductComponent implements OnInit {
   title:string='';
   categoryName:string='';
   categorie:any;
+  timeSt:number=0;
   constructor(private catalogueService: CatalogueService,
     private route: ActivatedRoute,
     private router: Router) {
     }
 
   ngOnInit(): void {
-        console.log("OK"+this.route.snapshot.params.idCategorie);
-        console.log("OK product"+this.route.snapshot.params.idCategorie);
-        this.router.events.subscribe((val) => {
-          if (val instanceof NavigationEnd) {
-            let url = val.url;        
-            let p1 = this.route.snapshot.params.p1;
-            console.log("tibari last"+p1);
-            if (p1 == 1) {
-              this.title="Produits sélectionné :";
-              this.getAllProduct("products/search/productSelected?page=" + this.page + "&size=" + this.size);
-            } else if (p1==2) {
-              //récupération idCategorie
-              let idCategorie=this.route.snapshot.params.idCategorie;
-              this.getCategory(idCategorie);
-              this.getAllProduct("categories/" + idCategorie + "/products?page=" + this.page + "&size=" + this.size);
-            }else if(p1 == 4){
-              this.title="Produits disponible :";
-              this.getAllProduct("products/search/productDisponible?page="+this.page+"&size="+this.size);
-            }else if(p1 == 5){
-              this.title="Produits en promotion :";
-              this.getAllProduct("products/search/productEnPromotion?page="+this.page+"&size="+this.size);
-              
-            }else if(p1==3){
-                this.title='Produits disponible :';
-                this.getAllProduct("products/search/productDisponible?page="+this.page+"&size="+this.size);  
-            }
+        
+        this.timeSt=Date.now();
+        this.route.paramMap.subscribe(params=>{
+          console.log(params);
+          let idCategorie=params.get('idCategorie');
+          let  p1=+params.get('p1');
+          if (p1 == 1) {
+            this.title="Produits sélectionné :";
+            this.getAllProduct("products/search/productSelected?page=" + this.page + "&size=" + this.size);
+          } else if (p1==2) {
+            //récupération idCategorie
+            let idCategorie=this.route.snapshot.params.idCategorie;
+            this.getCategory(idCategorie);
+            this.getAllProduct("categories/" + idCategorie + "/products?page=" + this.page + "&size=" + this.size);
+          }else if(p1 == 4){
+            this.title="Produits disponible :";
+            this.getAllProduct("products/search/productDisponible?page="+this.page+"&size="+this.size);
+          }else if(p1 == 5){
+            this.title="Produits en promotion :";
+            this.getAllProduct("products/search/productEnPromotion?page="+this.page+"&size="+this.size);
+            
+          }else if(p1==3){
+              this.title='Produits disponible :';
+              this.getAllProduct("products/search/productDisponible?page="+this.page+"&size="+this.size);  
           }
-        });
-        let p1 = this.route.snapshot.params.p1;
-        if (p1 == 1) {
-          this.title='Produits sélectionné :';
-          this.getAllProduct("products/search/productSelected?page=" + this.page + "&size=" + this.size);
-        }     
+          
+          if (p1 == 1) {
+            this.title='Produits sélectionné :';
+            this.getAllProduct("products/search/productSelected?page=" + this.page + "&size=" + this.size);
+          }   
+        });            
+          
   }
   getAllProduct(url) {
     this.catalogueService.getData(url)
@@ -78,7 +78,6 @@ export class ProductComponent implements OnInit {
   }
 
     onShowProduct(product:Product){
-      console.log("le code est "+product.code);
       this.router.navigateByUrl('/product/'+product.code);
     }
 
@@ -93,4 +92,7 @@ export class ProductComponent implements OnInit {
       })
     }
 
+    getTimeStamps(){
+      return this.timeSt;      
+    }
 }

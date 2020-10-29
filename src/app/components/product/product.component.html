@@ -10,13 +10,13 @@
 </mat-toolbar>
 <div *ngIf="products" class="card-columns spacer">
       <div class="card" style="width:400px" *ngFor="let product of products._embedded.products">
-        <img class="card-img-top" src="{{this.catalogueService.endPoint+'/getPhtoProduct/'+product.code}}" alt="Card image" style="height: 500px;width: 400px;">
+        <img class="card-img-top" src="{{this.catalogueService.endPoint+'/getPhtoProduct/'+product.code+'?ts='+getTimeStamps()}}" alt="Card image" style="height: 500px;width: 400px;">
         <div class="card-body">
           <h2 class="card-title">{{product.name }}</h2>
            <span><em>{{(product.currentPrice | number:'1.2-2')+' €'}}</em></span>
           <p class="card-text" style="font-size: 18px;">
             <!--{{ (product.description>6)? (product.description | slice:0:6)+'..':(product.description) }}</p>-->
-            {{ product.description | slice:0:10 }}</p>
+            {{ product.description | slice:0:40 }}...<a (click)="onShowProduct(product)" style="color: blue;">voir plus</a></p>
           <button (click)="onShowProduct(product)" class="btn btn-primary">show product</button>
         </div>
       </div>

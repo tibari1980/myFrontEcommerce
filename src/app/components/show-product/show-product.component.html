@@ -16,11 +16,9 @@
   <div *ngIf="product" class="card-columns col-md-6 spacer styleDivProduct">
 
     <div class="card" style="width:400px" *ngIf="product">
-      <img *ngIf="!showPhoto" class="card-img-top"
-        src="{{this.catalogueService.endPoint+'/getPhtoProduct/'+product.code}}" alt="{{product.name}}"
+      <img  class="card-img-top"
+        src="{{this.catalogueService.endPoint+'/getPhtoProduct/'+product.code+'?ts='+getTimeStamps()}}" alt="{{product.name}}"
         style="height: 500px;width: 400px;">
-      <img *ngIf="showPhoto" class="card-img-top" src="{{imgURL}}" alt="{{product.name}}"
-        style="height: 500px;width: 500px; margin: auto;">
       <div class="card-body">
         <h4 class="card-title">{{product.name}}</h4>
         <span>{{(product.currentPrice | number:'1.2-2')+' €'}}</span>

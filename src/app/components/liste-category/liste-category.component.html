@@ -5,12 +5,9 @@
         </button>
     </div>
     <div>
-        <h1>Gestion Categories :</h1>
+        <h1>Gestion des categories :</h1>
     </div>
 </mat-toolbar>
-<mat-spinner *ngIf="showDataSpinner" color="black" [diameter]="50" ></mat-spinner>
-<BR><br>
-
 <mat-spinner *ngIf="showDataSpinner" color="black" [diameter]="50" ></mat-spinner>
 <BR><br>
 <table  *ngIf="categories" class="table table-hover">
@@ -33,11 +30,11 @@
     <td>{{item.name}}</td>
     <td><p>{{item.description}}</p></td>
     <td  class="imageListe">
-        <img src="{{this.cataloguesService.endPoint+'getPhtoProduct/'+item.code}}" class="rounded-circle" title="{{item.name}}">
+        <img src="{{this.cataloguesService.endPoint+'getPhotoCategory/'+item.code+'?ts='+getTimeStamps()}}" class="rounded-circle" title="{{item.name}}">
     </td>
     <td>
     <a class="btn text-danger" (click)="onDelete(item.code)"><i class="fa fa-trash fa-lg"></i> </a>
-    <a class="btn text-danger" (click)="showCategory(item)"><i class="fa fa-pencil fa-lg"></i> </a>
+    <a class="btn text-danger" (click)="showCategory(item)"><i class="fa fa-eye fa-lg"></i> </a>
     </td>
     </tr>
     </tbody>
